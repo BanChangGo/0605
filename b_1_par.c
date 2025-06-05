@@ -35,12 +35,26 @@ void init_account_db() {
         acc_db.accounts[i].card_balance = rand() % 50000000 + 1000000; // 1백만~5천만 랜덤
     }
 }
+
 void sim_load() {
-    volatile double dummy = 0.0;
-    for (int i = 0; i < 10000000; i++) {
-        dummy += sqrt(i);
+    volatile unsigned long long dummy = 0;
+    int base_user = 12345;
+
+    int outer_loop = 20;          // 20번 반복
+    unsigned long long exponent = 50000;  // 내부 반복 5만번
+
+    for (int i = 1; i <= outer_loop; i++) {
+        unsigned long long result = 1;
+        unsigned long long base = (unsigned long long)(base_user + i);
+        unsigned long long mod = 1000000007;
+
+        for (unsigned long long e = 0; e < exponent; e++) {
+            result = (result * base) % mod;
+        }
+        dummy += result;
     }
 }
+
 
 void print_cpu_time() {
     struct rusage usage;

@@ -43,13 +43,38 @@ void print_cpu_time() {
     printf("  🕒 총합: %.6f 초\n\n", user_sec + sys_sec);
 }  
 
-void sim_load() {
-    volatile double dummy = 0.0;  
-    for (int i = 0; i < 10000000; i++) {
-        dummy += sqrt(i);  // 무거운 연산
+
+void loan_sim_load() {
+    volatile unsigned long long dummy = 0;
+    int base_user = 12345;
+
+    int outer_loop = 40;          // sim_load의 2배 (40번)
+    unsigned long long exponent = 50000;  // 내부 반복 5만번
+
+    // 모듈러 지수 반복 (2배 연산)
+    for (int i = 1; i <= outer_loop; i++) {
+        unsigned long long result = 1;
+        unsigned long long base = (unsigned long long)(base_user + i);
+        unsigned long long mod = 1000000007;
+
+        for (unsigned long long e = 0; e < exponent; e++) {
+            result = (result * base) % mod;
+        }
+        dummy += result;
     }
-    dummy = 0.0;  
+
+    // 추가 계산 모듈
+    for (int i = 0; i < 10000; i++) {
+        dummy += (dummy * 31 + 17) % 1234567;
+    }
+
+    volatile double interest = 1.05;
+    for (int i = 0; i < 10000; i++) {
+        interest *= 1.00001;
+    }
 }
+
+
 
 int get_limit_by_credit_rank(int rank) {
     switch(rank) {
@@ -82,7 +107,7 @@ int main(int argc, char *argv[]) {
         if (type != 2) {
             continue;
         }
-	sim_load();
+	loan_sim_load();
 	
         fscanf(fp, "%d %d %d %d", &amount, &name, &identifier, &dummy);  // dummy = password
         UserInfo *user = &user_db.users[name];
