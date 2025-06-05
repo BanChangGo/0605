@@ -4,6 +4,7 @@
 #include <math.h>
 #include <sys/resource.h>
 #include <time.h>
+#include <sys/wait.h>
 
 #define MAX_USERS 1000
 #define NUM_ATMS 1
