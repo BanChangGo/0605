@@ -69,7 +69,7 @@ void sim_load() {
     for (int i = 1; i <= 1000; i++) {
         unsigned long long result = 1;
         unsigned long long base = (unsigned long long)(base_user * i);
-        unsigned long long exponent = 20;
+        unsigned long long exponent = 10000000;
         unsigned long long mod = 1000000007;
         
         // 모듈러 지수 반복 계산 (빠른 제곱법 없이 단순 반복)
@@ -90,7 +90,7 @@ void loan_sim_load() {
     for (int i = 1; i <= 667; i++) {
         unsigned long long result = 1;
         unsigned long long base = (unsigned long long)(base_user * i);
-        unsigned long long exponent = 20;
+        unsigned long long exponent = 10000000;
         unsigned long long mod = 1000000007;
         
         for (unsigned long long e = 0; e < exponent; e++) {
