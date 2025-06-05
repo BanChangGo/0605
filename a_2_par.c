@@ -37,23 +37,28 @@ void init_account_db() {
 }
 
 // sim_load: 간단한 암호 해독 시뮬레이션
+#include <stdio.h>
+
 void sim_load() {
     volatile unsigned long long dummy = 0;
-    int base_user = 12345; // 임의의 고정 사용자 ID
-    
-    for (int i = 1; i <= 1000; i++) {
+    int base_user = 12345;
+
+    int outer_loop = 1000;      // 외부 루프 1000회 유지
+    unsigned long long exponent = 10000;  // 내부 루프 10,000회 (모듈러 곱셈+mod)
+
+    for (int i = 1; i <= outer_loop; i++) {
         unsigned long long result = 1;
         unsigned long long base = (unsigned long long)(base_user * i);
-        unsigned long long exponent = 10000000;
         unsigned long long mod = 1000000007;
-        
-        // 모듈러 지수 반복 계산 (빠른 제곱법 없이 단순 반복)
+
         for (unsigned long long e = 0; e < exponent; e++) {
             result = (result * base) % mod;
         }
         dummy += result;
     }
 }
+
+
 
 
 void print_cpu_time() {

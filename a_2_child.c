@@ -45,54 +45,38 @@ void print_cpu_time() {
 
 
 // sim_load: 간단한 암호 해독 시뮬레이션
-void sim_load() {
-    volatile unsigned long long dummy = 0;
-    int base_user = 12345; // 임의의 고정 사용자 ID
-    
-    for (int i = 1; i <= 1000; i++) {
-        unsigned long long result = 1;
-        unsigned long long base = (unsigned long long)(base_user * i);
-        unsigned long long exponent = 10000000;
-        unsigned long long mod = 1000000007;
-        
-        // 모듈러 지수 반복 계산 (빠른 제곱법 없이 단순 반복)
-        for (unsigned long long e = 0; e < exponent; e++) {
-            result = (result * base) % mod;
-        }
-        dummy += result;
-    }
-}
 
 
-// loan_sim_load: 대출 처리 시뮬레이션 (sim_load + 추가 연산)
 void loan_sim_load() {
     volatile unsigned long long dummy = 0;
-    int base_user = 12345; // 임의의 고정 사용자 ID
+    int base_user = 12345;
 
-    // sim_load의 2/3 연산만 수행
-    for (int i = 1; i <= 667; i++) {
+    int outer_loop = 2000;      // sim_load의 2배 반복 (2 × 1000)
+    unsigned long long exponent = 10000;  // 내부 루프 동일 (10,000)
+
+    // 모듈러 지수 반복 (2배 연산)
+    for (int i = 1; i <= outer_loop; i++) {
         unsigned long long result = 1;
         unsigned long long base = (unsigned long long)(base_user * i);
-        unsigned long long exponent = 10000000;
         unsigned long long mod = 1000000007;
-        
+
         for (unsigned long long e = 0; e < exponent; e++) {
             result = (result * base) % mod;
         }
         dummy += result;
     }
-    
-    // 신용조회 모듈
+
+    // 신용조회 + 이자 계산 (간단한 반복으로 시간 늘리기)
     for (int i = 0; i < 20000; i++) {
         dummy += (dummy * 31 + 17) % 1234567;
     }
-    
-    // 이자 계산 모듈 (단순 부동소수점 반복)
+
     volatile double interest = 1.05;
     for (int i = 0; i < 20000; i++) {
         interest = interest * 1.00001;
     }
 }
+
 
 int get_limit_by_credit_rank(int rank) {
     switch(rank) {
