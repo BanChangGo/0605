@@ -60,18 +60,16 @@ void init_user_db() {
     }
 }
 
-
-// sim_load: 간단한 암호 해독 시뮬레이션
 void sim_load() {
     volatile unsigned long long dummy = 0;
     int base_user = 12345;
 
-    int outer_loop = 100;       // 100으로 대폭 축소
-    unsigned long long exponent = 100000; // 100,000으로 올림 (100 × 100,000 = 10,000,000)
+    int outer_loop = 20;          // 20번 반복
+    unsigned long long exponent = 50000;  // 내부 반복 5만번
 
     for (int i = 1; i <= outer_loop; i++) {
         unsigned long long result = 1;
-        unsigned long long base = (unsigned long long)(base_user * i);
+        unsigned long long base = (unsigned long long)(base_user + i);
         unsigned long long mod = 1000000007;
 
         for (unsigned long long e = 0; e < exponent; e++) {
@@ -85,13 +83,13 @@ void loan_sim_load() {
     volatile unsigned long long dummy = 0;
     int base_user = 12345;
 
-    int outer_loop = 200;       // sim_load의 2배 반복 유지
-    unsigned long long exponent = 100000; // 내부 반복 동일
+    int outer_loop = 40;          // sim_load의 2배 (40번)
+    unsigned long long exponent = 50000;  // 내부 반복 5만번
 
     // 모듈러 지수 반복 (2배 연산)
     for (int i = 1; i <= outer_loop; i++) {
         unsigned long long result = 1;
-        unsigned long long base = (unsigned long long)(base_user * i);
+        unsigned long long base = (unsigned long long)(base_user + i);
         unsigned long long mod = 1000000007;
 
         for (unsigned long long e = 0; e < exponent; e++) {
@@ -100,14 +98,14 @@ void loan_sim_load() {
         dummy += result;
     }
 
-    // 신용조회 + 이자 계산 (간단한 반복으로 시간 늘리기)
-    for (int i = 0; i < 20000; i++) {
+    // 추가 계산 모듈
+    for (int i = 0; i < 10000; i++) {
         dummy += (dummy * 31 + 17) % 1234567;
     }
 
     volatile double interest = 1.05;
-    for (int i = 0; i < 20000; i++) {
-        interest = interest * 1.00001;
+    for (int i = 0; i < 10000; i++) {
+        interest *= 1.00001;
     }
 }
 
