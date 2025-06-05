@@ -62,14 +62,12 @@ void init_user_db() {
 
 
 // sim_load: 간단한 암호 해독 시뮬레이션
-
-
 void sim_load() {
     volatile unsigned long long dummy = 0;
     int base_user = 12345;
 
-    int outer_loop = 1000;      // 외부 루프 1000회 유지
-    unsigned long long exponent = 10000;  // 내부 루프 10,000회 (모듈러 곱셈+mod)
+    int outer_loop = 100;       // 100으로 대폭 축소
+    unsigned long long exponent = 100000; // 100,000으로 올림 (100 × 100,000 = 10,000,000)
 
     for (int i = 1; i <= outer_loop; i++) {
         unsigned long long result = 1;
@@ -87,8 +85,8 @@ void loan_sim_load() {
     volatile unsigned long long dummy = 0;
     int base_user = 12345;
 
-    int outer_loop = 2000;      // sim_load의 2배 반복 (2 × 1000)
-    unsigned long long exponent = 10000;  // 내부 루프 동일 (10,000)
+    int outer_loop = 200;       // sim_load의 2배 반복 유지
+    unsigned long long exponent = 100000; // 내부 반복 동일
 
     // 모듈러 지수 반복 (2배 연산)
     for (int i = 1; i <= outer_loop; i++) {
@@ -112,6 +110,7 @@ void loan_sim_load() {
         interest = interest * 1.00001;
     }
 }
+
 
 
 
