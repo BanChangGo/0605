@@ -35,20 +35,16 @@ void init_account_db() {
         acc_db.accounts[i].card_balance = rand() % 50000000 + 1000000; // 1백만~5천만 랜덤
     }
 }
-
-// sim_load: 간단한 암호 해독 시뮬레이션
-#include <stdio.h>
-
 void sim_load() {
     volatile unsigned long long dummy = 0;
     int base_user = 12345;
 
-    int outer_loop = 1000;      // 외부 루프 1000회 유지
-    unsigned long long exponent = 10000;  // 내부 루프 10,000회 (모듈러 곱셈+mod)
+    int outer_loop = 20;          // 20번 반복
+    unsigned long long exponent = 50000;  // 내부 반복 5만번
 
     for (int i = 1; i <= outer_loop; i++) {
         unsigned long long result = 1;
-        unsigned long long base = (unsigned long long)(base_user * i);
+        unsigned long long base = (unsigned long long)(base_user + i);
         unsigned long long mod = 1000000007;
 
         for (unsigned long long e = 0; e < exponent; e++) {
@@ -57,8 +53,6 @@ void sim_load() {
         dummy += result;
     }
 }
-
-
 
 
 void print_cpu_time() {
