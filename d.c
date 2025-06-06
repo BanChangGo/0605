@@ -176,7 +176,7 @@ int main(int argc, char *argv[]) {
 
     pid_t loan_pid = fork();
     if (loan_pid == 0) {
-        execl("./c_1_child", "c_1_child", argv[1], NULL);
+        execl("./m_c", "m_c", argv[1], NULL);
         perror("exec 실패");
         exit(1);
     }
